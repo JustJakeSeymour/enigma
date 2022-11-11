@@ -16,18 +16,21 @@ RSpec.describe Offset do
     expect(offset2.date).to eq '123105'
   end
 
-  it 'turns the string of date into a squared number' do
-    
+  it 'turns the string of date into a squared integer' do
+    expect(offset2.date_squared).to eq 15154841025
   end
 
   it 'takes the four last digits of the squared date' do
-    
-    
+    expect(offset2.date_squared_last_four).to eq '1025'
   end
 
   it 'add those digits into a hash with keys correlating to key class' do
-    
-    
+    expect(offset2.hash).to eq({
+                                :A => 1,
+                                :B => 0,
+                                :C => 2,
+                                :D => 5
+                              })
   end
   
   

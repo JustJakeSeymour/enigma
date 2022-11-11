@@ -12,6 +12,11 @@ class Offset
     return date
   end
   
+  def date_squared
+    @date.to_i ** 2
+  end
   
-  
+  def date_squared_last_four
+    date_squared.to_s[-4..-1]
+  end
 end
