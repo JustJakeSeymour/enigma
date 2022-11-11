@@ -19,4 +19,13 @@ class Offset
   def date_squared_last_four
     date_squared.to_s[-4..-1]
   end
+
+  def hash
+    {
+    :A => date_squared_last_four[0].to_i,
+    :B => date_squared_last_four[1].to_i,
+    :C => date_squared_last_four[2].to_i,
+    :D => date_squared_last_four[3].to_i,
+    }
+  end
 end
