@@ -9,11 +9,17 @@ RSpec.describe Key do
     expect(key2).to be_an_instance_of Key
   end
 
-  it 'generates a random 5 digit number is argument is not given' do
+  it 'generates a random 5 digit string is argument is not given' do
     expect(key1.key.length).to eq 5
+    expect(key1.key.length).to be_an_instance_of String
     expect(key2.key.length).to eq 5
     expect(key2.key).to eq '02341'
   end
 
-  
+  it 'separates 5 integer string into 4 hash places' do
+    expect(key2.hash).to eq {A => '02',
+                             B => '23',
+                             C => '34',
+                             D => '41'}
+  end
 end
