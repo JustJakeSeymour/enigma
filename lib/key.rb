@@ -19,10 +19,4 @@ class Key
       :D => "#{@key[3]}#{@key[4]}"
     }
   end
-  
 end
-
-
-# key = rand.to_s[2..6]
-
-# hash = {}
