@@ -23,31 +23,35 @@ class Enigma
     shift = Shift.new(@key.hash, @offset.hash).hash
     message = read_file_to_string.split('')
     new_string = replace_all(message, rotate_forwards(shift))
-    require 'pry'; binding.pry
-    new_string.to_s
+    new_string.join('')
   end
   
   def unshift_from_ciphertext
     shift = Shift.new(@key.hash, @offset.hash).hash
     message = read_file_to_string.split('')
     new_string = replace_all(message, rotate_backwards(shift))
-    new_string.to_s
+    new_string.join('')
   end
   
   def replace_all(message, rotation)
     message.map.with_index {|l,i|
-      replace(l, shift[:A]) if (i) % 4 == 0
-      replace(l, shift[:B]) if (i + 1) % 4 == 0
-      replace(l, shift[:C]) if (i + 2) % 4 == 0
-      replace(l, shift[:D]) if (i + 3) % 4 == 0
+      if (i) % 4 == 0  
+        replace(l, rotation[0])
+      elsif (i + 1) % 4 == 0
+        replace(l, rotation[1]) 
+      elsif (i + 2) % 4 == 0  
+        replace(l, rotation[2]) 
+      else
+        replace(l, rotation[3]) if (i + 3) % 4 == 0
+      end
       }
   end
-  
+
   def replace(letter, array)
-  index = alphabet_array.find{|position| position == letter}.index
+    index = alphabet_array.find_index(letter)
     array[index]  
   end
-
+  
   def write_string_to_file
     
   end
@@ -70,10 +74,10 @@ class Enigma
   end
 
   def rotate_backwards(shift)
-    [alphabet_array.rotate(-shift[:A]),
-     alphabet_array.rotate(-shift[:B]),
-     alphabet_array.rotate(-shift[:C]),
-     alphabet_array.rotate(-shift[:D])]
+    [alphabet_array.rotate(- shift[:A]),
+     alphabet_array.rotate(- shift[:B]),
+     alphabet_array.rotate(- shift[:C]),
+     alphabet_array.rotate(- shift[:D])]
   end
 
 end

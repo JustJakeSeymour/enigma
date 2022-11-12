@@ -59,9 +59,13 @@ RSpec.describe Enigma do
 
     it 'can rewrite a sting based on the shift hash lengths' do
       expect(enigma.shift_to_ciphertext).to be_an_instance_of String
+      expect(enigma.shift_to_ciphertext).to eq "bsmlitwtjkxyad"
     end
     
     it 'uses a shift object to rearrange string, but backwards' do
+      enigma2 = Enigma.new('./lib/cipher.txt', 'write.txt', '01234', '111122')
+      expect(enigma2.unshift_from_ciphertext).to be_an_instance_of String
+      expect(enigma2.unshift_from_ciphertext).to eq "this is a test"
       
     end
     
