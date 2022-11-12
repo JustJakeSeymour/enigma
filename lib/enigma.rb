@@ -63,7 +63,7 @@ class Enigma
     File.write(@write, text)
   end
 
-  def encrypt
+  def encrypt(string, key, date)
     write_string_to_file(shift_to_ciphertext)
     statement = {
       encryption: shift_to_ciphertext,
@@ -72,7 +72,7 @@ class Enigma
     }
   end
   
-  def decrypt
+  def decrypt(string, key, date)
     write_string_to_file(unshift_from_ciphertext)
     statement = {
       decryption: unshift_from_ciphertext,

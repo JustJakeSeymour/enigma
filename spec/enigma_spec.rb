@@ -87,7 +87,7 @@ RSpec.describe Enigma do
     end
     
     it 'can encrypt and returns a hash' do
-      expect(enigma.encrypt).to eq({
+      expect(enigma.encrypt('this is a test', '01234', '111122')).to eq({
         encryption: "bsmlitwtjkxyad",
         key: '01234',
         date: '111122'
@@ -97,12 +97,19 @@ RSpec.describe Enigma do
     
     it 'can decrypt and returns a hash' do
       enigma2 = Enigma.new('./lib/cipher.txt', './lib/write.txt', '01234', '111122')
-      expect(enigma2.decrypt).to eq ({
+      expect(enigma2.decrypt('bsmlitwtjkxyad', '01234', '111122')).to eq ({
         decryption: "this is a test",
         key: '01234',
         date: '111122'
       })
       expect(File.read('./lib/write.txt')).to eq "this is a test"
     end
+
+    it 'can encrypt and encrypt with the current date if none supplied' do
+      
+    end
+
+
+    
   end
 end
