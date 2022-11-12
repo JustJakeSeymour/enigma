@@ -21,8 +21,8 @@ RSpec.describe Enigma do
   
   it 'creates a Key object, even if one is not given' do
     enigma1 = Enigma.new('filepath', 'filepath')
-    enigma2 = Enigma.new('filepath', 'filepath', 'key', 'date')
-
+    enigma2 = Enigma.new('filepath', 'filepath', '02341', 'date')
+    
     expect(enigma1.key.key.length).to eq 5
     expect(enigma1.key).to be_an_instance_of Key
 
