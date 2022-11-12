@@ -44,10 +44,10 @@ RSpec.describe Enigma do
       expect(enigma2.offset.date).to eq '220385'
     end
   end
-  
+
   describe 'encrypting and decrypting' do
     it 'reads a text file into a string' do
-
+      
     end
 
     it 'can write a string to a text file' do
