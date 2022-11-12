@@ -11,26 +11,21 @@ class Enigma
     @offset = Offset.new(date)
   end
 
-  # not directly tested
-  def alphabet_array
-    ('a'..'z').to_a.push(" ")
-  end
-
   def read_file_to_string
     File.read(@read)
   end
   
   def shift_to_ciphertext
-    shift = Shift.new(@key.hash, @offset.hash).hash
+    shift = Shift.new(@key.hash, @offset.hash)
     message = read_file_to_string.downcase.split('')
-    new_string = replace_all(message, rotate_forwards(shift))
+    new_string = replace_all(message, shift.rotate_forwards)
     new_string.join('')
   end
   
   def unshift_from_ciphertext
-    shift = Shift.new(@key.hash, @offset.hash).hash
+    shift = Shift.new(@key.hash, @offset.hash)
     message = read_file_to_string.split('')
-    new_string = replace_all(message, rotate_backwards(shift))
+    new_string = replace_all(message, shift.rotate_backwards)
     new_string.join('')
   end
   
@@ -47,7 +42,7 @@ class Enigma
       replace(l, rotation[3]) if (i + 3) % 4 == 0
     end}
   end
-
+  
   # not directly tested
   def replace(letter, array)
     return letter if !included_letter?(letter)
@@ -58,17 +53,17 @@ class Enigma
   def included_letter?(letter)
     alphabet_array.any?{|position| position == letter}
   end
-
+  
   def write_string_to_file(text)
     File.write(@write, text)
   end
-
+  
   def encrypt(string, key, date)
     write_string_to_file(shift_to_ciphertext)
     statement = {
       encryption: shift_to_ciphertext,
-      key: @key.key,
-      date: @offset.date
+      key: key,
+      date: date
     }
   end
   
@@ -76,23 +71,12 @@ class Enigma
     write_string_to_file(unshift_from_ciphertext)
     statement = {
       decryption: unshift_from_ciphertext,
-      key: @key.key,
-      date: @offset.date
+      key: key,
+      date: date
     }
   end
-  
-  def rotate_forwards(shift)
-    [alphabet_array.rotate(shift[:A]),
-     alphabet_array.rotate(shift[:B]),
-     alphabet_array.rotate(shift[:C]),
-     alphabet_array.rotate(shift[:D])]
+    
+  def alphabet_array
+    ('a'..'z').to_a.push(" ")
   end
-
-  def rotate_backwards(shift)
-    [alphabet_array.rotate(- shift[:A]),
-     alphabet_array.rotate(- shift[:B]),
-     alphabet_array.rotate(- shift[:C]),
-     alphabet_array.rotate(- shift[:D])]
-  end
-
 end
