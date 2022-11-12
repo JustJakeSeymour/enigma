@@ -86,15 +86,30 @@ RSpec.describe Enigma do
       expect(File.read('./lib/write.txt')).to eq 'this will write again to the same file'
     end
     
-    it 'can encrypt' do
-      enigma.encrypt
+    it 'can encrypt and returns a hash' do
+      expect(enigma.encrypt('this is a test', '01234', '111122')).to eq({
+        encryption: "bsmlitwtjkxyad",
+        key: '01234',
+        date: '111122'
+      })
       expect(File.read('./lib/write.txt')).to eq "bsmlitwtjkxyad"
     end
     
-    it 'can decrypt' do
+    it 'can decrypt and returns a hash' do
       enigma2 = Enigma.new('./lib/cipher.txt', './lib/write.txt', '01234', '111122')
-      enigma2.decrypt
+      expect(enigma2.decrypt('bsmlitwtjkxyad', '01234', '111122')).to eq ({
+        decryption: "this is a test",
+        key: '01234',
+        date: '111122'
+      })
       expect(File.read('./lib/write.txt')).to eq "this is a test"
     end
+
+    it 'can encrypt and encrypt with the current date if none supplied' do
+      
+    end
+
+
+    
   end
 end
