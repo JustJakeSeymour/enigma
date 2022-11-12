@@ -11,6 +11,7 @@ class Enigma
     @offset = Offset.new(date)
   end
 
+  # not directly tested
   def alphabet_array
     ('a'..'z').to_a.push(" ")
   end
@@ -64,10 +65,20 @@ class Enigma
 
   def encrypt
     write_string_to_file(shift_to_ciphertext)
+    statement = {
+      encryption: shift_to_ciphertext,
+      key: @key.key,
+      date: @offset.date
+    }
   end
   
   def decrypt
     write_string_to_file(unshift_from_ciphertext)
+    statement = {
+      decryption: unshift_from_ciphertext,
+      key: @key.key,
+      date: @offset.date
+    }
   end
   
   def rotate_forwards(shift)
