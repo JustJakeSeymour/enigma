@@ -20,4 +20,35 @@ RSpec.describe Shift do
     expect(shift.hash[:C]).to be_an_instance_of Integer
     expect(shift.hash[:D]).to be_an_instance_of Integer
   end
+
+  it 'holds an array of characters to be rotated' do
+      key = Key.new
+    offset = Offset.new
+    shift = Shift.new(key.hash, offset.hash)
+
+    expect(shift.alphabet_array.length).to eq 27
+    expect(shift.alphabet_array[0]).to eq 'a'
+  end
+
+  it 'holds an array of positive rotated alphabet arrays' do
+    key = Key.new
+    offset = Offset.new
+    shift = Shift.new(key.hash, offset.hash)
+
+    expect(shift.rotate_forwards.length).to eq 4
+    expect(shift.rotate_forwards[0]).to be_an_instance_of Array
+    expect(shift.rotate_forwards[0].length).to eq 27
+    expect(shift.rotate_forwards[0][0]).to be_an_instance_of String
+  end
+
+  it 'holds an array of negative rotated alphabet arrays' do
+    key = Key.new
+    offset = Offset.new
+    shift = Shift.new(key.hash, offset.hash)
+
+    expect(shift.rotate_backwards.length).to eq 4
+    expect(shift.rotate_backwards[0]).to be_an_instance_of Array
+    expect(shift.rotate_backwards[0].length).to eq 27
+    expect(shift.rotate_backwards[0][0]).to be_an_instance_of String
+  end
 end
