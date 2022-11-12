@@ -46,7 +46,7 @@ RSpec.describe Enigma do
   end
   
   describe 'encrypting and decrypting' do
-    let!(:enigma) {Enigma.new('./lib/read.txt', 'write.txt', '01234', '111122')}
+    let!(:enigma) {Enigma.new('./lib/read.txt', './lib/write.txt', '01234', '111122')}
 
     it 'holds an array of the alphabet, plus a space' do
       expect(enigma.alphabet_array.length).to eq 27
@@ -76,16 +76,25 @@ RSpec.describe Enigma do
     
     it 'can write a string to a text file' do
       enigma.write_string_to_file('this will write to file')
-      require 'pry'; binding.pry
       expect(File.read('./lib/write.txt')).to eq 'this will write to file'
     end
     
-    it 'can encrypt' do
-      
+    it 'will overwrite the file if it is existing' do
+      enigma.write_string_to_file('this will write to file')
+      expect(File.read('./lib/write.txt')).to eq 'this will write to file'
+      enigma.write_string_to_file('this will write again to the same file')
+      expect(File.read('./lib/write.txt')).to eq 'this will write again to the same file'
     end
-
+    
+    it 'can encrypt' do
+      enigma.encrypt
+      expect(File.read('./lib/write.txt')).to eq "bsmlitwtjkxyad"
+    end
+    
     it 'can decrypt' do
-
+      enigma2 = Enigma.new('./lib/cipher.txt', './lib/write.txt', '01234', '111122')
+      enigma2.decrypt
+      expect(File.read('./lib/write.txt')).to eq "this is a test"
     end
   end
 end
