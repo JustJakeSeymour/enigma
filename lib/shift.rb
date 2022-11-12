@@ -9,7 +9,6 @@ class Shift
     key.merge(offset){|symbol, k, o| k + o}
   end
 
-  # not directly tested
   def alphabet_array
     ('a'..'z').to_a.push(" ")
   end

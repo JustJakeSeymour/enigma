@@ -75,21 +75,7 @@ class Enigma
       date: date
     }
   end
-  
-  # def rotate_forwards(shift)
-  #   [alphabet_array.rotate(shift[:A]),
-  #    alphabet_array.rotate(shift[:B]),
-  #    alphabet_array.rotate(shift[:C]),
-  #    alphabet_array.rotate(shift[:D])]
-  # end
-  
-  # def rotate_backwards(shift)
-  #   [alphabet_array.rotate(- shift[:A]),
-  #    alphabet_array.rotate(- shift[:B]),
-  #    alphabet_array.rotate(- shift[:C]),
-  #    alphabet_array.rotate(- shift[:D])]
-  # end
-  
+    
   def alphabet_array
     ('a'..'z').to_a.push(" ")
   end
