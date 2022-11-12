@@ -66,11 +66,18 @@ RSpec.describe Enigma do
       enigma2 = Enigma.new('./lib/cipher.txt', 'write.txt', '01234', '111122')
       expect(enigma2.unshift_from_ciphertext).to be_an_instance_of String
       expect(enigma2.unshift_from_ciphertext).to eq "this is a test"
-      
+    end
+    
+    it 'ignores special characters and is case insensitive' do
+      enigma2 = Enigma.new('./lib/read2.txt', 'write.txt', '01234', '111122')
+      expect(enigma2.read_file_to_string).to eq 'ThIs, mEsSaGe! "WILL" encrypt?'
+      expect(enigma2.shift_to_ciphertext).to eq "bsml,kqyace n!d\"etpe\"kiglbbib?"
     end
     
     it 'can write a string to a text file' do
-      
+      enigma.write_string_to_file('this will write to file')
+      require 'pry'; binding.pry
+      expect(File.read('./lib/write.txt')).to eq 'this will write to file'
     end
     
     it 'can encrypt' do

@@ -21,7 +21,7 @@ class Enigma
   
   def shift_to_ciphertext
     shift = Shift.new(@key.hash, @offset.hash).hash
-    message = read_file_to_string.split('')
+    message = read_file_to_string.downcase.split('')
     new_string = replace_all(message, rotate_forwards(shift))
     new_string.join('')
   end
@@ -33,37 +33,41 @@ class Enigma
     new_string.join('')
   end
   
+  # not directly tested
   def replace_all(message, rotation)
     message.map.with_index {|l,i|
-      if (i) % 4 == 0  
-        replace(l, rotation[0])
-      elsif (i + 1) % 4 == 0
-        replace(l, rotation[1]) 
-      elsif (i + 2) % 4 == 0  
-        replace(l, rotation[2]) 
-      else
-        replace(l, rotation[3]) if (i + 3) % 4 == 0
-      end
-      }
+    if (i) % 4 == 0  
+      replace(l, rotation[0])
+    elsif (i + 1) % 4 == 0
+      replace(l, rotation[1]) 
+    elsif (i + 2) % 4 == 0  
+      replace(l, rotation[2]) 
+    else
+      replace(l, rotation[3]) if (i + 3) % 4 == 0
+    end}
   end
 
+  # not directly tested
   def replace(letter, array)
-    index = alphabet_array.find_index(letter)
-    array[index]  
+    return letter if !included_letter?(letter)
+    array[alphabet_array.find_index(letter)] if included_letter?(letter)
   end
   
-  def write_string_to_file
-    
+  # not directly tested
+  def included_letter?(letter)
+    alphabet_array.any?{|position| position == letter}
+  end
+
+  def write_string_to_file(text)
+    File.write(@write, text)
   end
 
   def encrypt
-    shift_to_ciphertext
-    write_string_to_file
+    write_string_to_file(shift_to_ciphertext)
   end
   
   def decrypt
-    unshift_from_ciphertext
-    write_string_to_file
+    write_string_to_file(unshift_from_ciphertext)
   end
   
   def rotate_forwards(shift)
