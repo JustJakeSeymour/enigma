@@ -11,12 +11,17 @@ class Enigma
     @offset = Offset.new(date)
   end
 
-  def read_file_to_string
+  def alphabet_array
+    ('a'..'z').to_a.push(" ")
+  end
 
+  def read_file_to_string
+    File.read(@read)
   end
   
   def shift_to_ciphertet
-
+    shift = Shift.new(@key, @offset).hash
+    read_file_to_string
   end
   
   def unshift_from_ciphertext
@@ -26,7 +31,7 @@ class Enigma
   def write_string_to_file
     
   end
-  
+
   def encrypt
     
   end

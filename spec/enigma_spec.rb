@@ -9,7 +9,7 @@ RSpec.describe Enigma do
     it 'initializes with arguments' do
       enigma1 = Enigma.new('filepath', 'filepath')
       enigma2 = Enigma.new('filepath', 'filepath', 'key', 'date')
-      
+
       expect(enigma1).to be_an_instance_of Enigma
       expect(enigma2).to be_an_instance_of Enigma
     end
@@ -44,14 +44,17 @@ RSpec.describe Enigma do
       expect(enigma2.offset.date).to eq '220385'
     end
   end
-
+  
   describe 'encrypting and decrypting' do
-    it 'reads a text file into a string' do
-      
-    end
+    let!(:enigma) {Enigma.new('./lib/read.txt', 'write.txt', '01234', '111122')}
 
-    it 'can write a string to a text file' do
-      
+    it 'holds an array of the alphabet, plus a space' do
+      expect(enigma.alphabet_array.length).to eq 27
+      expect(enigma.alphabet_array).to be_an_instance_of Array
+    end
+    
+    it 'reads a text file into a string' do
+      expect(enigma.read_file_to_string).to eq 'this is a test'
     end
 
     it 'can rewrite a sting based on the shift hash lengths' do
@@ -59,11 +62,19 @@ RSpec.describe Enigma do
     end
     
     it 'uses a shift object to rearrange string, but backwards' do
-
+      
+    end
+    
+    it 'can write a string to a text file' do
+      
     end
     
     it 'can encrypt' do
       
+    end
+
+    it 'can decrypt' do
+
     end
   end
 end
