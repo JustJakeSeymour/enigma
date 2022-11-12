@@ -16,10 +16,10 @@ RSpec.describe Key do
     expect(key2.key).to eq '02341'
   end
 
-  it 'separates 5 integer string into 4 hash places' do
-    expect(key2.hash).to eq ({:A => '02',
-                              :B => '23',
-                              :C => '34',
-                              :D => '41'})
+  it 'separates 5 integer strings into 4 hash places, back to integers' do
+    expect(key2.hash).to eq ({:A => 02,
+                              :B => 23,
+                              :C => 34,
+                              :D => 41})
   end
 end
