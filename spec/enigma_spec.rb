@@ -5,41 +5,65 @@ require './lib/key'
 
 RSpec.describe Enigma do
 
-  it 'initializes with arguments' do
-    enigma1 = Enigma.new('filepath', 'filepath')
-    enigma2 = Enigma.new('filepath', 'filepath', 'key', 'date')
+  describe 'attributes' do
+    it 'initializes with arguments' do
+      enigma1 = Enigma.new('filepath', 'filepath')
+      enigma2 = Enigma.new('filepath', 'filepath', 'key', 'date')
+      
+      expect(enigma1).to be_an_instance_of Enigma
+      expect(enigma2).to be_an_instance_of Enigma
+    end
     
-    expect(enigma1).to be_an_instance_of Enigma
-    expect(enigma2).to be_an_instance_of Enigma
+    it 'contains the filepath to read, and to write' do
+      enigma1 = Enigma.new('read.txt', 'write.txt')
+      expect(enigma1.read).to eq 'read.txt'
+      expect(enigma1.write).to eq 'write.txt'
+    end
+    
+    it 'creates a Key object, even if one is not given' do
+      enigma1 = Enigma.new('filepath', 'filepath')
+      enigma2 = Enigma.new('filepath', 'filepath', '02341', 'date')
+      
+      expect(enigma1.key.key.length).to eq 5
+      expect(enigma1.key).to be_an_instance_of Key
+      
+      expect(enigma2.key.key.length).to eq 5
+      expect(enigma2.key.key).to eq '02341'
+    end
+    
+    it 'creates an offset object, even if a date is not given' do
+      enigma1 = Enigma.new('filepath', 'filepath')
+      enigma2 = Enigma.new('filepath', 'filepath', '02341', '220385')
+      
+      expect(enigma1.offset.date.length).to eq 6
+      expect(enigma1.offset).to be_an_instance_of Offset
+      expect(enigma1.offset.date).to eq Time.now.strftime '%d%m%y'
+      
+      expect(enigma2.offset.date.length).to eq 6
+      expect(enigma2.offset).to be_an_instance_of Offset
+      expect(enigma2.offset.date).to eq '220385'
+    end
   end
   
-  it 'contains the filepath to read, and to write' do
-    enigma1 = Enigma.new('read.txt', 'write.txt')
-    expect(enigma1.read).to eq 'read.txt'
-    expect(enigma1.write).to eq 'write.txt'
-  end
-  
-  it 'creates a Key object, even if one is not given' do
-    enigma1 = Enigma.new('filepath', 'filepath')
-    enigma2 = Enigma.new('filepath', 'filepath', '02341', 'date')
+  describe 'encrypting and decrypting' do
+    it 'reads a text file into a string' do
+
+    end
+
+    it 'can write a string to a text file' do
+      
+    end
+
+    it 'can rewrite a sting based on the shift hash lengths' do
+
+    end
     
-    expect(enigma1.key.key.length).to eq 5
-    expect(enigma1.key).to be_an_instance_of Key
+    it 'uses a shift object to rearrange string, but backwards' do
+
+    end
     
-    expect(enigma2.key.key.length).to eq 5
-    expect(enigma2.key.key).to eq '02341'
-  end
-  
-  it 'creates an offset object, even if a date is not given' do
-    enigma1 = Enigma.new('filepath', 'filepath')
-    enigma2 = Enigma.new('filepath', 'filepath', '02341', '220385')
-    
-    expect(enigma1.offset.date.length).to eq 6
-    expect(enigma1.offset).to be_an_instance_of Offset
-    expect(enigma1.offset.date).to eq Time.now.strftime '%d%m%y'
-    
-    expect(enigma2.offset.date.length).to eq 6
-    expect(enigma2.offset).to be_an_instance_of Offset
-    expect(enigma2.offset.date).to eq '220385'
+    it 'can encrypt' do
+      
+    end
   end
 end
