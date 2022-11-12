@@ -25,8 +25,21 @@ RSpec.describe Enigma do
     
     expect(enigma1.key.key.length).to eq 5
     expect(enigma1.key).to be_an_instance_of Key
-
+    
     expect(enigma2.key.key.length).to eq 5
     expect(enigma2.key.key).to eq '02341'
+  end
+  
+  it 'creates an offset object, even if a date is not given' do
+    enigma1 = Enigma.new('filepath', 'filepath')
+    enigma2 = Enigma.new('filepath', 'filepath', '02341', '220385')
+    
+    expect(enigma1.offset.date.length).to eq 6
+    expect(enigma1.offset).to be_an_instance_of Offset
+    expect(enigma1.offset.date).to eq Time.now.strftime '%d%m%y'
+    
+    expect(enigma2.offset.date.length).to eq 6
+    expect(enigma2.offset).to be_an_instance_of Offset
+    expect(enigma2.offset.date).to eq '220385'
   end
 end
