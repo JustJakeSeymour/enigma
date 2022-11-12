@@ -13,7 +13,7 @@ RSpec.describe Decrypt do
     
   end
 
-  it 'does not require a key or date' do
+  it 'requires a key or date unless cracking is intended' do
 
   end
 end

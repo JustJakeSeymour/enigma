@@ -1,7 +1,6 @@
 class Enigma
   attr_reader :read,
               :write,
-              :key,
               :offset
 
   def initialize(read, write, key = nil, date = nil)
@@ -9,6 +8,14 @@ class Enigma
     @write = write
     @key = Key.new(key)
     @offset = Offset.new(date)
+  end
+
+  def key
+    @key.key
+  end
+  
+  def date
+    @offset.date
   end
 
   def read_file_to_string
