@@ -58,7 +58,7 @@ RSpec.describe Enigma do
     end
 
     it 'can rewrite a sting based on the shift hash lengths' do
-
+      expect(enigma.shift_to_ciphertext).to be_an_instance_of String
     end
     
     it 'uses a shift object to rearrange string, but backwards' do
