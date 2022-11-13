@@ -16,4 +16,8 @@ RSpec.describe Encrypt do
   it 'does not require a key or date' do
 
   end
+
+  it 'verifies filepath to read is .txt' do
+    
+  end
 end

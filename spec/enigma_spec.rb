@@ -105,11 +105,12 @@ RSpec.describe Enigma do
       expect(File.read('./lib/write.txt')).to eq "this is a test"
     end
 
-    it 'can encrypt and encrypt with the current date if none supplied' do
+    it 'can encrypt with the current date if none supplied' do
       
     end
 
+    it 'can encrypt generating a key if none is given' do
 
-    
+    end
   end
 end

@@ -16,4 +16,8 @@ RSpec.describe Decrypt do
   it 'requires a key or date unless cracking is intended' do
 
   end
+
+  it 'verifies the read file is .txt' do
+
+  end
 end
