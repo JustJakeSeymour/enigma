@@ -40,7 +40,7 @@ class Enigma
     new_string.join('')
   end
   
-  def encrypt(string, key = @key.key, date = @offset.date)
+  def encrypt(string, key, date)
     write_string_to_file(shift_to_ciphertext)
     {
       encryption: shift_to_ciphertext,

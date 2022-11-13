@@ -8,7 +8,11 @@ class Key
   # if I can add this into the initialize attribute, should I?
   def number_generate(key)
     return rand.to_s[2..6] if key.nil?
-    return key
+    return remove_and_pad(key)
+  end
+
+  def remove_and_pad(key)
+    key.to_s.tr('^0-9', '').rjust(5, '0')[-5..-1]
   end
 
   def hash
