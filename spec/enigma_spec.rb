@@ -24,24 +24,24 @@ RSpec.describe Enigma do
       enigma1 = Enigma.new('filepath', 'filepath')
       enigma2 = Enigma.new('filepath', 'filepath', '02341', 'date')
       
-      expect(enigma1.key.key.length).to eq 5
-      expect(enigma1.key).to be_an_instance_of Key
+      expect(enigma1.key.length).to eq 5
+      expect(enigma1.key).to be_an_instance_of String
       
-      expect(enigma2.key.key.length).to eq 5
-      expect(enigma2.key.key).to eq '02341'
+      expect(enigma2.key.length).to eq 5
+      expect(enigma2.key).to eq '02341'
     end
     
-    it 'creates an offset object, even if a date is not given' do
+    it 'creates an date, even if a date is not given' do
       enigma1 = Enigma.new('filepath', 'filepath')
       enigma2 = Enigma.new('filepath', 'filepath', '02341', '220385')
       
-      expect(enigma1.offset.date.length).to eq 6
-      expect(enigma1.offset).to be_an_instance_of Offset
-      expect(enigma1.offset.date).to eq Time.now.strftime '%d%m%y'
+      expect(enigma1.date.length).to eq 6
+      expect(enigma1.date).to be_an_instance_of String
+      expect(enigma1.date).to eq Time.now.strftime '%d%m%y'
       
-      expect(enigma2.offset.date.length).to eq 6
-      expect(enigma2.offset).to be_an_instance_of Offset
-      expect(enigma2.offset.date).to eq '220385'
+      expect(enigma2.date.length).to eq 6
+      expect(enigma2.date).to be_an_instance_of String
+      expect(enigma2.date).to eq '220385'
     end
   end
   
@@ -105,11 +105,10 @@ RSpec.describe Enigma do
       expect(File.read('./lib/write.txt')).to eq "this is a test"
     end
 
-    it 'can encrypt and encrypt with the current date if none supplied' do
-      
+    it 'can encrypt with the current date, and a generated key if none supplied' do
+      enigma3 = Enigma.new('./lib/read.txt', './lib/write.txt')
+      expect(enigma3.encrypt('this is a test')[:date]).to be_an_instance_of String
+      expect(enigma3.encrypt('this is a test')[:key]).to be_an_instance_of String
     end
-
-
-    
   end
 end

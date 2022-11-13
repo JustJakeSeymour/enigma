@@ -32,6 +32,20 @@ RSpec.describe Offset do
                                 :D => 5
                               })
   end
+
+  it 'adjusts the supplied date to be 5 digits if over or under 5 is supplied' do
+    offset3 = Offset.new('345')
+    offset4 = Offset.new('12345678')
+
+    expect(offset3.date).to eq '000345'
+    expect(offset4.date).to eq '345678'
+  end
   
-  # add comparison that keys are the same?
+  it 'ignores anything given in the date that is not an integer' do
+    offset3 = Offset.new('3x4!5')
+    offset4 = Offset.new('123x4x5x6x7x8')
+    
+    expect(offset3.date).to eq '000345'
+    expect(offset4.date).to eq '345678'
+  end
 end

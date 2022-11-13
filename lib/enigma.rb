@@ -1,7 +1,6 @@
 class Enigma
   attr_reader :read,
               :write,
-              :key,
               :offset
 
   def initialize(read, write, key = nil, date = nil)
@@ -11,8 +10,20 @@ class Enigma
     @offset = Offset.new(date)
   end
 
+  def key
+    @key.key
+  end
+  
+  def date
+    @offset.date
+  end
+
   def read_file_to_string
     File.read(@read)
+  end
+  
+  def write_string_to_file(text)
+    File.write(@write, text)
   end
   
   def shift_to_ciphertext
@@ -27,6 +38,24 @@ class Enigma
     message = read_file_to_string.split('')
     new_string = replace_all(message, shift.rotate_backwards)
     new_string.join('')
+  end
+  
+  def encrypt(string, key, date)
+    write_string_to_file(shift_to_ciphertext)
+    {
+      encryption: shift_to_ciphertext,
+      key: key,
+      date: date
+    }
+  end
+  
+  def decrypt(string, key, date)
+    write_string_to_file(unshift_from_ciphertext)
+    {
+      decryption: unshift_from_ciphertext,
+      key: key,
+      date: date
+    }
   end
   
   # not directly tested
@@ -53,29 +82,7 @@ class Enigma
   def included_letter?(letter)
     alphabet_array.any?{|position| position == letter}
   end
-  
-  def write_string_to_file(text)
-    File.write(@write, text)
-  end
-  
-  def encrypt(string, key, date)
-    write_string_to_file(shift_to_ciphertext)
-    statement = {
-      encryption: shift_to_ciphertext,
-      key: key,
-      date: date
-    }
-  end
-  
-  def decrypt(string, key, date)
-    write_string_to_file(unshift_from_ciphertext)
-    statement = {
-      decryption: unshift_from_ciphertext,
-      key: key,
-      date: date
-    }
-  end
-    
+
   def alphabet_array
     ('a'..'z').to_a.push(" ")
   end

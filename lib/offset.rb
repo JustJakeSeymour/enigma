@@ -9,9 +9,13 @@ class Offset
 
   def date_generate(date)
     return Time.now.strftime '%d%m%y' if date.nil?
-    return date
+    return remove_and_pad(date)
   end
   
+  def remove_and_pad(date)
+    date.to_s.tr('^0-9', '').rjust(6, '0')[-6..-1]
+  end
+
   def date_squared
     @date.to_i ** 2
   end
