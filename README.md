@@ -1,6 +1,6 @@
 # Enigma
 
-Final project for Mod 1.
+### Final project for Mod 1.
 
 ## Functionality:
 Enigma Class includes #encrypt & #decrypt, and work as described in the project requirements. Encrypt.rb and Decrypt.rb runner files accept the anticipated arguments. This meets expectations.
