@@ -6,11 +6,11 @@ class Shift
   end
 
   def combination(key, offset)
-    key.merge(offset){|symbol, k, o| k + o}
+    key.merge(offset) { |symbol, k, o| k + o }
   end
 
   def alphabet_array
-    ('a'..'z').to_a.push(" ")
+    ('a'..'z').to_a.push(' ')
   end
 
   def rotate_forwards

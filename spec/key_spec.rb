@@ -1,9 +1,9 @@
 require './lib/key'
 
 RSpec.describe Key do
-  let!(:key1) {Key.new}
-  let!(:key2) {Key.new('02341')}
-  
+  let!(:key1) { Key.new }
+  let!(:key2) { Key.new('02341') }
+
   it 'creates as a Key and an optional argument' do
     expect(key1).to be_an_instance_of Key
     expect(key2).to be_an_instance_of Key
@@ -23,19 +23,19 @@ RSpec.describe Key do
     expect(key3.key).to eq '00345'
     expect(key4.key).to eq '45678'
   end
-  
+
   it 'ignores anything given in the key that is not an integer' do
     key3 = Key.new('3x4!5')
     key4 = Key.new('x4x5x6x7x8')
-    
+
     expect(key3.key).to eq '00345'
     expect(key4.key).to eq '45678'
   end
 
   it 'separates 5 integer strings into 4 hash places, back to integers' do
-    expect(key2.hash).to eq ({:A => 02,
-                              :B => 23,
-                              :C => 34,
-                              :D => 41})
+    expect(key2.hash).to eq({ A: 0o2,
+                              B: 23,
+                              C: 34,
+                              D: 41 })
   end
 end
