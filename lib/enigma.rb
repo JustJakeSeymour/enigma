@@ -8,12 +8,13 @@ class Enigma
     @write = write
     @key = Key.new(key)
     @offset = Offset.new(date)
+    @shift = Shift.new(@key.hash, @offset.hash)
   end
 
   def key
     @key.key
   end
-  
+
   def date
     @offset.date
   end
@@ -21,25 +22,23 @@ class Enigma
   def read_file_to_string
     File.read(@read)
   end
-  
+
   def write_string_to_file(text)
     File.write(@write, text)
   end
-  
+
   def shift_to_ciphertext
-    shift = Shift.new(@key.hash, @offset.hash)
     message = read_file_to_string.downcase.split('')
-    new_string = replace_all(message, shift.rotate_forwards)
+    new_string = replace_all(message, @shift.rotate_forwards)
     new_string.join('')
   end
-  
+
   def unshift_from_ciphertext
-    shift = Shift.new(@key.hash, @offset.hash)
     message = read_file_to_string.split('')
-    new_string = replace_all(message, shift.rotate_backwards)
+    new_string = replace_all(message, @shift.rotate_backwards)
     new_string.join('')
   end
-  
+
   def encrypt(string, key = @key.key, date = @offset.date)
     write_string_to_file(shift_to_ciphertext)
     {
@@ -48,7 +47,7 @@ class Enigma
       date: date
     }
   end
-  
+
   def decrypt(string, key, date)
     write_string_to_file(unshift_from_ciphertext)
     {
@@ -57,33 +56,28 @@ class Enigma
       date: date
     }
   end
-  
-  # not directly tested
+
   def replace_all(message, rotation)
-    message.map.with_index {|l,i|
-    if (i) % 4 == 0  
-      replace(l, rotation[0])
-    elsif (i + 1) % 4 == 0
-      replace(l, rotation[1]) 
-    elsif (i + 2) % 4 == 0  
-      replace(l, rotation[2]) 
-    else
-      replace(l, rotation[3]) if (i + 3) % 4 == 0
-    end}
-  end
-  
-  # not directly tested
-  def replace(letter, array)
-    return letter if !included_letter?(letter)
-    array[alphabet_array.find_index(letter)] if included_letter?(letter)
-  end
-  
-  # not directly tested
-  def included_letter?(letter)
-    alphabet_array.any?{|position| position == letter}
+    message.map.with_index do |l, i|
+      if (i % 4).zero?
+        replace(l, rotation[0])
+      elsif ((i + 1) % 4).zero?
+        replace(l, rotation[1])
+      elsif ((i + 2) % 4).zero?
+        replace(l, rotation[2])
+      elsif ((i + 3) % 4).zero?
+        replace(l, rotation[3])
+      end
+    end
   end
 
-  def alphabet_array
-    ('a'..'z').to_a.push(" ")
+  def replace(letter, array)
+    return letter unless included_letter?(letter)
+
+    array[@shift.alphabet_array.find_index(letter)] if included_letter?(letter)
+  end
+
+  def included_letter?(letter)
+    @shift.alphabet_array.any? { |position| position == letter }
   end
 end

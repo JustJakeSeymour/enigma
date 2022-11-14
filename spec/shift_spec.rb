@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './lib/shift'
 require './lib/key'
 require './lib/offset'
@@ -9,7 +11,7 @@ RSpec.describe Shift do
     shift = Shift.new(key.hash, offset.hash)
     expect(shift).to be_an_instance_of Shift
   end
-  
+
   it 'holds a hash which is the sum of the key and offset values' do
     key = Key.new
     offset = Offset.new
@@ -22,7 +24,7 @@ RSpec.describe Shift do
   end
 
   it 'holds an array of characters to be rotated' do
-      key = Key.new
+    key = Key.new
     offset = Offset.new
     shift = Shift.new(key.hash, offset.hash)
 
