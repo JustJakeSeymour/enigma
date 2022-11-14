@@ -6,8 +6,8 @@ class Key
   end
 
   def number_generate(key)
-    rand.to_s[2..6] if key.nil?
-    remove_and_pad(key)
+    return remove_and_pad(key) unless key.nil?
+    rand.to_s[2..6]
   end
 
   def remove_and_pad(key)
